@@ -1,0 +1,63 @@
+/* Fondo rosa de tu rectángulo */
+.rectangulo {
+  background-color: #ff69b4;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 500px;
+  margin: 80px auto 0; /* 👈 dejamos espacio arriba para los iconos */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.rectangulo h1 {
+  color: white;
+  font-family: 'Arial', sans-serif;
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+}
+
+.rectangulo nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.rectangulo nav ul li a {
+  text-decoration: none;
+  color: white;
+  background-color: #ff85c1;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.rectangulo nav ul li a:hover {
+  background-color: #ff4fa2;
+}
+
+/* Contenedor de iconos arriba a la derecha */
+.iconos-top {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/* Estilo de las imágenes de iconos */
+.iconos-top img {
+  width: 40px;       /* tamaño del icono */
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+/* Efecto al pasar el mouse */
+.iconos-top img:hover {
+  transform: scale(1.1);
+}

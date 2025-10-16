@@ -33,10 +33,18 @@ app.use((req,res,next)=>{
 app.use('/products', productRoutes);
 app.use('/books', bookRoutes);
 
+/*Acceso normal*/
 app.get('/',(req,res)=>{
     const {user}=req.session
-    res.render('login',user)
+    res.render('home',user)
 });   
+
+/*Acceso a login*/
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+
 app.post('/login', async (req,res)=>{
     try{
         const {username,password}=req.body
