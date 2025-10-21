@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 
+/*CRUD de una para uan cosa */
 const router = express.Router();
 
 const readData = () => JSON.parse(fs.readFileSync('./db/db.json'));

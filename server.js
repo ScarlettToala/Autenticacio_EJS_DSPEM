@@ -1,114 +1,111 @@
 import express from 'express';
-import productRoutes from './routes/products.js';
-import bookRoutes from './routes/books.js';
 import methodOverride from 'method-override';
-import { PORT, SECRET_JWT_KEY } from './config.js'
-import { UserRepository } from './user-repository.js';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 
+import productRoutes from './routes/products.js';
+import bookRoutes from './routes/books.js';
+import { PORT, SECRET_JWT_KEY } from './config.js';
+import { UserRepository } from './user-repository.js';
+import sessionMiddleware from './middleware/session.js';
+import requireAuth from './middleware/protect.js';
+
 const app = express();
-app.use(express.json());//Para poder recibir datos JSON
-app.use(cookieParser()) //Permite acceder a cookies en req.cookies
-app.use(express.static("public")); // Càrrega CSS i altres fitxers públics
+
+/* --- MIDDLEWARES GLOBALES --- */
+app.use(express.json());                       // Para datos JSON
+app.use(cookieParser());                       // Para leer cookies
+app.use(express.static("public"));             // Archivos estáticos (CSS, imágenes, etc.)
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(sessionMiddleware);                    // 👈 Verifica el token en cada petición
 
-app.set('view engine', 'ejs'); // Motor de plantilles
-app.set('views', './views'); // Ubicació de les plantilles
+/* --- CONFIGURACIÓN DE VISTAS --- */
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
-//inicio middleware
+/* --- RUTAS PROTEGIDAS --- */
 
-/**Cuando el usuario inicia sesión correctamente, el servidor genera un JWT con la info del usuario (por ejemplo: { id: 1, username: 'Ana' }). Posteriomrnete se gurada en una cookie del navegador Cadanueva petición verifica que eltken sea valido y si lo es reconstruye un onjeto req.session.user*/
+// Proteger toda la sección de productos
+app.use('/products', requireAuth, productRoutes);
 
-/*Busca el token en la cookie(access_token)*/
-app.use((req, res, next) => {
+// Ruta protegida para el perfil
+app.get('/profile', requireAuth, (req, res) => {
+    res.render('profile', {
+        username: req.session.user.username,
+        id: req.session.user.id
+    });
+});
 
-    const token = req.cookies.access_token
-    req.session = { user: null }
-    try {
-        //si existe intenta verificar con jwt.verify si no eixste el user = null
-        const data = jwt.verify(token, SECRET_JWT_KEY)
+// Ejemplo de otra ruta protegida simple
+app.get('/protected', requireAuth, (req, res) => {
+    res.render('protected', { username: req.session.user.username });
+});
 
-        req.session.user = data
-    } catch (error) {
 
-        req.session.user = null
-    }
-    next() //en caso de que no exista
+/* --- RUTAS PÚBLICAS --- */
 
-    //Aquí la sesión está “simulada” usando JWT + cookie. 
-})
+// 📚 Libros sin protección
+app.use('/book', bookRoutes);
 
-app.use('/products', productRoutes);
-app.use('/books', bookRoutes);
-
-/*Acceso normal*/
+// Página principal (accesible con o sin sesión)
 app.get('/', (req, res) => {
-    const { user } = req.session ;
-    res.render('home', user );
+    const { user } = req.session;
+    res.render('home', { username: user ? user.username : null });
 });
 
-/*Acceso a login*/
-app.get('/login', (req, res) => {
-    res.render('login');
-});
+// Login y registro
+app.get('/login', (req, res) => res.render('login'));
+app.get('/register', (req, res) => res.render('register'));
 
-/*Acceso a registre*/
-app.get('/register', (req, res) => {
-    res.render('register');
-});
-
+/* --- AUTENTICACIÓN --- */
 app.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body
-        const user = await UserRepository.login({ username, password })
+        const { username, password } = req.body;
+        const user = await UserRepository.login({ username, password });
+
         const token = jwt.sign(
             { id: user._id, username: user.username },
             SECRET_JWT_KEY,
-            {
-                expiresIn: '1h'
-            })
-        res
-            .cookie('access_token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 1000 * 60 * 60
-            })
-            .send({ user, token })
+            { expiresIn: '1h' }
+        );
+
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 60
+        })
+            .redirect('/protected'); //  redirige al perfil tras login
     } catch (error) {
-        res.status(401).send(error.message)
+        res.status(401).send(error.message);
     }
 });
 
 app.post('/register', async (req, res) => {
-    const { username, password } = req.body
-    console.log(req.body)
+    const { username, password } = req.body;
     try {
-        const id = await UserRepository.create({ username, password });
-        res.send({ id })
+        await UserRepository.create({ username, password });
+        res.redirect('/login');
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).send(error.message);
     }
 });
 
-app.post('/logout', (req, res) => {
-    res
-        .clearCookie('access_token')
-        .json({ message: 'logout successfull' })
-        .send('logout');
+/* --- LOGOUT --- */
+app.get('/logout', (req, res) => {
+    res.clearCookie('access_token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
+    req.session = { user: null }; 
+    res.redirect('/');
 });
-app.get('/protected2', (req, res) => {
-    const { user } = req.session
-    if (!user) return res.status(403).send('acceso no autorizado')
-    res.render('protected2', user)
-});
-app.get('/protected', (req, res) => {
-    const { user } = req.session
-    if (!user) return res.status(403).send('acceso no autorizado')
-    res.render('home', user)
-});
+
+
+
+/* --- INICIO DEL SERVIDOR --- */
 app.listen(PORT, () => {
-    console.log(`Server running on port${PORT}`);
+    console.log(`✅ Server running on: http://localhost:${PORT}`);
 });
