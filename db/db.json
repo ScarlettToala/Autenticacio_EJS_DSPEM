@@ -2,27 +2,33 @@
     "products": [
         {
             "id": 1,
-            "name": "FrancescLaptop",
-            "price": "999.99",
-            "category": "Electronics"
+            "name": "Pastel de Chocolate",
+            "price": 25.50,
+            "category": "Pasteles Clásicos"
         },
         {
             "id": 2,
-            "name": "Laptop 2",
-            "price": 999.99,
-            "category": "Electronics"
+            "name": "Pastel Red Velvet",
+            "price": 30.00,
+            "category": "Especialidades"
         },
         {
             "id": 3,
-            "name": "Gaming Laptop",
-            "price": 1199.99,
-            "category": "Electronics"
+            "name": "Cheesecake de Fresa",
+            "price": 28.75,
+            "category": "Refrigerados"
         },
         {
             "id": 4,
-            "name": "Laptop 4",
-            "price": 999.99,
-            "category": "Electronics"
+            "name": "Pastel Tres Leches",
+            "price": 27.00,
+            "category": "Pasteles Clásicos"
+        },
+        {
+            "id": 5,
+            "name": "Pastel de Zanahoria",
+            "price": 26.00,
+            "category": "Especialidades"
         }
     ],
     "books": [

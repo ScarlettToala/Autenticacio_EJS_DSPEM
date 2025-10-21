@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benvingut</title>
+    <title>Detall producte</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script src="./js/deleteProduct.js" defer type="module"></script>
 </head>
+
 <body>
     <header>
         <h1>Gestió de Productes per <%= user.name %>!</h1>
@@ -15,15 +18,20 @@
         <section>
             <h2>Detall de producte</h2>
             <ul class="product-list">
-                
-                    <li class="product-item">
-                        <strong><%= product.name %></strong>
-                        <span>Categoria: <%= product.category %></span>
-                        <span>Preu: €<%= product.price %></span>
-                    </li>
-                
+
+                <li class="product-item">
+                    <strong>
+                        <%= product.name %>
+                    </strong>
+                    <span>Categoria: <%= product.category %></span>
+                    <span>Preu: €<%= product.price %></span>
+                    <span><a href="/products/editProducte/<%=product.id %>">Editar producte</a></span>
+                    <button onclick="deleteProduct('<%= product.id %>')">Eliminar</button>
+                </li>
+
             </ul>
         </section>
     </main>
 </body>
+
 </html>

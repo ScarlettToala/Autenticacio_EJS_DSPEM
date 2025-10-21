@@ -18,8 +18,9 @@
                 <% data.products.forEach(product => { %>
                     <li class="product-item">
                         <strong><%= product.name %></strong>
+                        <!--
                         <span>Categoria: <%= product.category %></span>
-                        <span>Preu: €<%= product.price %></span>
+                        <span>Preu: €<%= product.price %></span>-->
                         <span><a href="/products/<%=product.id %>">Detall producte</a></span>
                         <span><a href="/products/editProducte/<%=product.id %>">Editar producte</a></span>
                     </li>

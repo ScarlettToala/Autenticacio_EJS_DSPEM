@@ -1,45 +1,61 @@
 import express from 'express';
 import fs from 'fs';
+import { requireAuth } from '../middlewares/protect.js'; 
 
 const router = express.Router();
 
 const readData = () => JSON.parse(fs.readFileSync('./db/db.json'));
 const writeData = (data) => fs.writeFileSync('./db/db.json', JSON.stringify(data));
 
-router.get('/', (req, res) => {
-    const user = { name: "Francesc" };
-    const htmlMessage = `<p>Aquest és un text <strong>amb estil</strong> i un enllaç:</p>
-                         <a href="/">Home</a>`;
+router.get('/', requireAuth,(req, res) => {
+
+    //Un mensaje HTML que se mostrará en la página.
+    const htmlMessage = `<p>Benvingut/da!</p>
+                        <a href="/">Home</a>`;
     const data = readData();
     res.render("products", { user, data, htmlMessage });
 });
-router.get('/editProducte/:id', (req, res) => {
-    const user = { name: "Francesc" };
-    const htmlMessage = `
-    <p>Aquest és un text <strong>amb estil</strong> i un enllaç:</p>
-    <a href="/products">Llistat de productes</a>`;
-    
+
+/*
+:id → Parámetro dinámico (el ID del producto a editar).
+req.params.id → Obtiene el ID desde la URL.
+find(...) → Busca en data.products el producto con ese ID.
+Si no lo encuentra, responde con 404.
+Si lo encuentra, renderiza la vista edit_product con la información.
+*/
+router.get('/editProducte/:id', requireAuth, (req, res) => {
+    const htmlMessage = `<a href="/products">Llistat de productes</a>`;
+
     const data = readData();
     const product = data.products.find(p => p.id === parseInt(req.params.id));
-    
-    if (!product) return res.status(404).send('Product not found');
+
+    if (!product) return res.status(404).send('Producte not found');
 
     res.render("edit_product", { user, product, htmlMessage });
 });
 
-router.get('/:id', (req, res) => {
-    const user = { name: "Francesc" };
-    const htmlMessage = `<p>Aquest és un text <strong>amb estil</strong> i un enllaç:</p>
-                         <a href="/products">Llistat de productes</a>`;
+/*Similar al anterior, pero en lugar de editarlo, solo muestra la información del producto.
+Usa la vista product.*/
+router.get('/:id', requireAuth , (req, res) => {
+    const htmlMessage = `<a href="/products">Llistat de productes</a>`;
     const data = readData();
     const product = data.products.find(p => p.id === parseInt(req.params.id));
     if (!product) return res.status(404).send('Product not found');
     res.render("product", { user, product, htmlMessage });
 });
 
-router.post('/', (req, res) => {
+/*
+Recibe datos desde un formulario o petición POST.
+Valida que no falte ningún campo.
+Crea un nuevo objeto newProduct con un id nuevo.
+Lo agrega al array de productos (data.products).
+Guarda en db.json con writeData(data).
+Devuelve el producto creado como respuesta JSON.
+*/
+router.post('/', requireAuth, (req, res) => {
     const data = readData();
     const { name, price, category } = req.body;
+    //compureba que esten los 3
     if (!name || !price || !category) return res.status(400).send('All fields are required');
     const newProduct = { id: data.products.length + 1, name, price, category };
     data.products.push(newProduct);
@@ -47,7 +63,14 @@ router.post('/', (req, res) => {
     res.json(newProduct);
 });
 
-router.put('/:id', (req, res) => {
+/*
+Busca el producto por ID.
+Si no existe → responde 404.
+Si existe → combina los datos existentes con los nuevos (...spread operator).
+Guarda los cambios en db.json.
+Redirige al listado de productos.
+*/
+router.put('/:id', requireAuth,(req, res) => {
     const data = readData();
     const id = parseInt(req.params.id);
     const productIndex = data.products.findIndex(p => p.id === id);
@@ -58,7 +81,14 @@ router.put('/:id', (req, res) => {
     res.redirect('/products');
 });
 
-router.delete('/:id', (req, res) => {
+/*
+Busca el producto por ID.
+Si no existe → 404.
+Si existe → lo elimina del array con splice.
+Actualiza el archivo db.json.
+Devuelve un mensaje de éxito.
+*/
+router.delete('/:id', requireAuth,(req, res) => {
     const data = readData();
     const id = parseInt(req.params.id);
     const productIndex = data.products.findIndex(p => p.id === id);
