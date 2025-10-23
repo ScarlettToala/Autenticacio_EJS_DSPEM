@@ -1,13 +1,19 @@
+### Obtener todos los productos
 GET http://localhost:3000/products
+Authorization: Bearer {{token}}
 
 ###
 
-GET http://localhost:3000/products/2
+### Obtener un producto por ID
+GET http://localhost:3000/products/1
+Authorization: Bearer {{token}}
 
 ###
 
-POST http://localhost:3000/products HTTP/1.1
+### Crear un nuevo producto
+POST http://localhost:3000/products/add
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "name": "Tarta tres leches",
@@ -17,15 +23,19 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/products/3 HTTP/1.1
+### Actualizar un producto existente
+PUT http://localhost:3000/products/add/3
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "name": "Gaming Laptop",
-  "price": 1199.99,
-  "category": "Electronics"
+  "name": "Maiz tarta ",
+  "price": 11.99,
+  "category": "Maiz"
 }
 
 ###
 
-DELETE http://localhost:3000/products/3 HTTP/1.1
+### Eliminar un producto
+DELETE http://localhost:3000/products/3
+Authorization: Bearer {{token}}

@@ -9,12 +9,25 @@
 
 <body>
     <header>
-        <h1><%= username %></h1>
-        <a href="/logout">Cerrar sesión</a>
+        <h1>
+            <%= username %>
+        </h1>
+        <div class="marco">
+            <img src="" alt="Foto">
+        </div>
+        <div class="links">
+            <nav>
+                <ul>
+                    <li><a href="/logout">Cerrar sesión</a></li>
+                    <li><a href="/protected"> Volver</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <section>
-        <p>Tu ID de usuario es: <%= id %></p>
+        <p>Tu ID de usuario es: <%= id %>
+        </p>
     </section>
 </body>
 

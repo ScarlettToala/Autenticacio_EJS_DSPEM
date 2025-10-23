@@ -1,4 +1,4 @@
-/* 🌸 ESTILOS BASE */
+/* ESTILOS BASE */
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +15,7 @@ body {
   padding: 40px 20px;
 }
 
-/* ✨ Animación de aparición suave */
+/* Animación de aparición suave */
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -27,7 +27,7 @@ body {
   }
 }
 
-/* 💬 Saludo superior */
+/* Saludo superior */
 .saludo {
   text-align: center;
   margin-bottom: 25px;
@@ -40,7 +40,7 @@ body {
   font-weight: 600;
 }
 
-/* 🩷 Contenedor principal */
+/* Contenedor principal */
 .rectangulo {
   background-color: #ff69b4;
   padding: 30px 25px;
@@ -56,7 +56,7 @@ body {
   gap: 25px;
 }
 
-/* 🧭 Sección navegación */
+/* Sección navegación */
 .Navegacion h1 {
   color: white;
   font-size: 2.8rem;
@@ -88,7 +88,7 @@ body {
   transform: translateY(-4px);
 }
 
-/* 🛍️ Iconos inferiores */
+/* Iconos inferiores */
 .rectangulo img {
   width: 45px;
   height: 45px;
@@ -102,7 +102,7 @@ body {
   filter: brightness(1.1);
 }
 
-/* 🧰 Panel de admin */
+/* Panel de admin */
 .form-container {
   background: #ffe1ef;
   padding: 15px;
@@ -149,7 +149,7 @@ body {
   text-decoration: underline;
 }
 
-/* 📱 Responsivo */
+/*  Responsivo */
 @media (max-width: 600px) {
   .Navegacion h1 {
     font-size: 2.2rem;

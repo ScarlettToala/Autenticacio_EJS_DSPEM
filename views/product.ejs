@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detall producte</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css">
-    <script src="./js/deleteProduct.js" defer type="module"></script>
+    <link rel="stylesheet" type="text/css" href="/css/detall.css">
+    <script src="/js/deleteProduct.js" defer></script>
 </head>
 
 <body>
     <header>
-        <h1>Gestió de Productes per <%= user.name %>!</h1>
+        <h1>Gestió de Productes per <%= user.username %>!</h1>
         <h2><%- htmlMessage %></h2>
     </header>
     <main>
@@ -25,8 +25,10 @@
                     </strong>
                     <span>Categoria: <%= product.category %></span>
                     <span>Preu: €<%= product.price %></span>
-                    <span><a href="/products/editProducte/<%=product.id %>">Editar producte</a></span>
-                    <button onclick="deleteProduct('<%= product.id %>')">Eliminar</button>
+                    <div class="links">
+                        <span><a href="/products/editProducte/<%=product.id %>">Editar producte</a></span>
+                        <button onclick="deleteProduct('<%= product.id %>')">Eliminar</button>
+                    </div>
                 </li>
 
             </ul>

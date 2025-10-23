@@ -5,30 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login and registration</title>
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/form.css">
     <script src="/js/login.js" defer type="module"></script>
 </head>
 
 <body>
-    <div class="container">
-        <% if (typeof username==='undefined' ) { %>
-            <div class="form-container">
-                <form id="login-form">
-                    <h2>Login</h2>
-                    <label for="login-username">Username:</label>
-                    <input type="text" id="login-username" name="username" required>
+    <% if (typeof username==='undefined' ) { %>
+        <main>
+            <form id="login-form">
+                <h2>Login</h2>
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" name="username" required>
 
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" name="password" required>
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" name="password" required>
 
-                    <button type="submit">Login</button>
-                    <span>&nbsp;</span>
-                    <p>No tienes cuenta?<a href="register">Registrarse</a></p>
-                </form>
-            </div>
+                <button type="submit">Login</button>
+                <span>&nbsp;</span>
+                <p>No tienes cuenta?<a href="register">Registrarse</a></p>
+            </form>
+        </main>
         <% } %>
-    </div>
-
 </body>
 
 </html>

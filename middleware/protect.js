@@ -1,3 +1,11 @@
+/*
+Este middleware verifica que el usuario tenga un JWT válido en la cookie access_token.
+
+Si el token no existe o no es válido → redirige a /login.
+
+Si es válido → decodifica el usuario y lo guarda en req.session.user.
+*/
+
 // middleware/protect.js
 import jwt from 'jsonwebtoken';
 import { SECRET_JWT_KEY } from '../config.js';

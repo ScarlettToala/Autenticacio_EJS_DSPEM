@@ -39,14 +39,14 @@ app.get('/profile', requireAuth, (req, res) => {
 });
 
 // Ejemplo de otra ruta protegida simple
-app.get('/protected', requireAuth,(req, res) => {
+app.get('/protected', requireAuth, (req, res) => {
     res.render('protected', { username: req.session.user.username });
 });
 
 
 /* --- RUTAS PÚBLICAS --- */
 
-// 📚 Libros sin protección
+// Libros sin protección
 app.use('/book', bookRoutes);
 
 // Página principal (accesible con o sin sesión)
@@ -87,12 +87,29 @@ app.post('/login', async (req, res) => {
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     try {
-        await UserRepository.create({ username, password });
-        res.redirect('/login');
+        const id = await UserRepository.create({ username, password });
+
+        // Creación del token con username del req.body
+        const token = jwt.sign(
+            { id, username }, 
+            SECRET_JWT_KEY,
+            { expiresIn: '1h' }
+        );
+
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 60
+        });
+
+        res.redirect('/protected');
     } catch (error) {
-        res.status(400).send(error.message);
+        console.error(error);
+        res.status(401).send(error.message);
     }
 });
+
 
 /* --- LOGOUT --- */
 app.get('/logout', (req, res) => {
@@ -101,7 +118,7 @@ app.get('/logout', (req, res) => {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict'
     });
-    req.session = { user: null }; 
+    req.session = { user: null };
     res.redirect('/');
 });
 

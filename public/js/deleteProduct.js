@@ -3,6 +3,7 @@ function deleteProduct(id) {
 
     fetch(`/products/${id}`, {
         method: 'DELETE',
+        credentials: 'include', //esto es importante para enviar la cookie JWT
         headers: {
             'Content-Type': 'application/json'
         }

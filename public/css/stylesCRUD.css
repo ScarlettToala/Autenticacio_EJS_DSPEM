@@ -1,0 +1,217 @@
+body {
+    font-family: Georgia, serif;
+    background: linear-gradient(135deg, #ffe6f0, #ffd1e8);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rectangulo {
+    background-color: #ff379b;
+    /* Rosa fuerte */
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(255, 55, 155, 0.4);
+    max-width: 400px;
+    width: 90%;
+    color: white;
+    text-align: center;
+    animation: fadeInScale 0.6s ease forwards;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.navegacion h1 {
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.navegacion p {
+    margin: 8px 0;
+    font-size: 1.1rem;
+}
+
+.navegacion a img {
+    width: 40px;
+    height: 40px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.navegacion a img:hover {
+    transform: scale(1.1);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li a {
+    background-color: #ffda22;
+    color: black;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(255, 55, 155, 0.4);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+}
+
+nav ul li a:hover {
+    background-color: #e7c20a;
+    color: rgb(0, 0, 0);
+}
+
+/* Animación de aparición con escala */
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+.product-item {
+    background-color: #ffe6f0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 55, 155, 0.15);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.product-item strong {
+    font-size: 1.3rem;
+    color: #ff379b;
+    font-family: Georgia, serif;
+}
+
+.product-actions ul {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+}
+
+.product-actions ul li {
+    display: inline-block;
+}
+
+.product-actions ul li a,
+.product-actions ul li button {
+    background-color: #ffda22;
+    color: black;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(255, 218, 34, 0.5);
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.product-actions ul li a:hover,
+.product-actions ul li button:hover {
+    background-color: #e7c20a;
+}
+
+.product-actions ul li button {
+    background-color: #ff379b;
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(255, 55, 155, 0.5);
+}
+
+.product-actions ul li button:hover {
+    background-color: #e61e80;
+}
+
+.home {
+    display: inline-block;
+    background-color: #ffe356;
+    color: black;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(174, 149, 22, 0.5);
+    transition: background-color 0.3s ease;
+    font-family: Arial, sans-serif;
+    margin-top: 15px;
+    /* Para separarlo si está debajo de algo */
+}
+
+.home {
+    background-color: #e7c20a;
+}
+
+/* Contenedor para el botón añadir */
+.afegir {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+/* Botón para añadir producto */
+.btn-add-product {
+    display: inline-block;
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #ff69b4, #ffd700);
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+}
+
+.btn-add-product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(255, 105, 180, 0.5);
+}
+
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .product-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .product-actions ul {
+        flex-wrap: wrap;
+    }
+}
