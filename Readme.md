@@ -58,3 +58,10 @@ Y una vez que se accede a protected ya puede acceder a las siguientes links de a
 
 Para hacer las comprobaciones del CRUD de los productso se utilizño el Rest Client: Pero no las realiza porque requiere de un token por lo tanto siemrpe envia al formualario de login.
 
+## Uso de CORS para crear API
+
+ En una aplicación Node.js con Express, primero debes instalar el paquete
+
+ ```bash
+ npm install cors
+ ```
