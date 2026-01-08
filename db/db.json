@@ -1,42 +1,42 @@
 {
-    "products": [
-        {
-            "id": 1,
-            "name": "Pastel de Chocolate",
-            "price": "25.5",
-            "category": "Pasteles Clásicos"
-        },
-        {
-            "id": 5,
-            "name": "Pastel de Maní",
-            "price": "34",
-            "category": "Mani"
-        },
-        {
-            "id": 4,
-            "name": "Chocolate",
-            "price": "30",
-            "category": "Choco"
-        },
-        {
-            "id": 5,
-            "name": "Azúcar",
-            "price": "34",
-            "category": "Azúcar"
-        }
-    ],
-    "books": [
-        {
-            "id": 1,
-            "name": "Los 7 hábitos de la gente altamente efectiva",
-            "author": "Stephen R. Covey",
-            "year": 1989
-        },
-        {
-            "id": 2,
-            "name": "Padre rico, padre pobre",
-            "author": "Robert Kiyosaki",
-            "year": 1997
-        }
-    ]
+  "products": [
+    {
+      "id": 1,
+      "name": "Pastel de Chocolate",
+      "price": "25.5",
+      "category": "Pasteles Clásicos"
+    },
+    {
+      "id": 4,
+      "name": "Chocolate",
+      "price": "30",
+      "category": "Choco"
+    },
+    {
+      "id": 6,
+      "name": "Roscón Nata",
+      "price": "28",
+      "category": "Navidad"
+    },
+    {
+      "id": 7,
+      "name": "Galletas",
+      "price": "5",
+      "category": "Navidad"
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "name": "Los 7 hábitos de la gente altamente efectiva",
+      "author": "Stephen R. Covey",
+      "year": 1989
+    },
+    {
+      "id": 2,
+      "name": "Padre rico, padre pobre",
+      "author": "Robert Kiyosaki",
+      "year": 1997
+    }
+  ]
 }

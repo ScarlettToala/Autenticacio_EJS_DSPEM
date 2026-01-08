@@ -11,6 +11,7 @@ const writeData = (data) =>
 
 /* ===== GET todos los productos ===== */
 router.get('/', (req, res) => {
+  console.log("ENTRO A /api/products");
   const data = readData();
   res.json(data.products);
 });

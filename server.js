@@ -5,6 +5,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import productRoutes from './routes/products.js';
+
+import productRoutesAPI from './routes/productsAPI.js';
+
 import bookRoutes from './routes/books.js';
 import { PORT, SECRET_JWT_KEY } from './config.js';
 import { UserRepository } from './user-repository.js';
@@ -34,6 +37,7 @@ app.use(sessionMiddleware);                    //  Verifica el token en cada pet
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+
 /* --- RUTAS PROTEGIDAS --- */
 
 // Proteger toda la sección de productos
@@ -54,6 +58,9 @@ app.get('/protected', requireAuth, (req, res) => {
 
 
 /* --- RUTAS PÚBLICAS --- */
+
+//ruta para BackEnd NODE + VUE
+app.use('/api/products', productRoutesAPI);
 
 // Libros sin protección
 app.use('/book', bookRoutes);
